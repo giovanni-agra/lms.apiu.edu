@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in to the site</title>
+    <title>Learning Management System: Log in to the site</title>
     <link rel="icon" href="https://lms.apiu.edu/theme/image.php/boost/theme/1735542498/favicon" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,111 +15,160 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #e8eaed;
+            font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #1d2125;
+            background-color: #f2f3f7;
+        }
+
+        /* PAGE STATES */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ===== LOGIN PAGE (exact Moodle replica) ===== */
+        .login-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        .page { display: none; width: 100%; max-width: 480px; }
-        .page.active { display: block; }
-
-        /* LOGIN PAGE */
-        .login-container {
-            background: white;
+        .loginform {
+            background: #fff;
+            padding: 32px;
             border-radius: 8px;
-            padding: 40px 48px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 528px;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 32px;
+        .login-logo {
+            margin-bottom: 16px;
         }
 
-        .apiu-seal { width: 60px; height: 60px; }
-
-        .apiu-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a3a5c;
-            letter-spacing: 0.5px;
-            line-height: 1.3;
-            text-transform: uppercase;
+        .login-logo img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
-        .logo-divider {
+        .login-heading {
+            position: absolute;
             width: 1px;
-            height: 50px;
-            background-color: #ccc;
-            margin: 0 8px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
 
-        .moodle-logo { height: 40px; }
+        .form-group {
+            margin-bottom: 16px;
+        }
 
-        .form-group { margin-bottom: 16px; }
-
-        .form-group input {
+        .form-control-lg {
+            display: block;
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 16px;
+            padding: 8px 16px;
+            font-size: 18.75px;
+            font-weight: 400;
+            font-family: Roboto, sans-serif;
             color: #495057;
+            background-color: #fff;
+            border: 1px solid #8f959e;
+            border-radius: 9.6px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            -webkit-appearance: none;
         }
 
-        .form-group input:focus {
-            border-color: #f89d1c;
-            box-shadow: 0 0 0 2px rgba(248, 157, 28, 0.15);
+        .form-control-lg:focus {
+            border-color: #0f47ad;
+            box-shadow: 0 0 0 0.2rem rgba(15, 71, 173, 0.25);
         }
 
-        .form-group input::placeholder { color: #6c757d; }
+        .form-control-lg::placeholder {
+            color: #6c757d;
+        }
 
-        .login-btn {
+        .btn-primary {
+            display: block;
             width: 100%;
-            padding: 12px;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
+            padding: 8px 16px;
+            font-size: 18.75px;
+            font-weight: 400;
+            font-family: Roboto, sans-serif;
+            color: #fff;
+            background-color: #0f47ad;
+            border: 1px solid #0f47ad;
+            border-radius: 9.6px;
             cursor: pointer;
-            margin-top: 4px;
-            transition: background-color 0.2s;
+            text-align: center;
+            transition: background-color 0.15s ease-in-out;
         }
 
-        .login-btn:hover { background-color: #0b5ed7; }
+        .btn-primary:hover {
+            background-color: #0d3d94;
+            border-color: #0d3d94;
+        }
 
-        .links { text-align: center; margin-top: 16px; }
+        .login-form-forgotpassword {
+            text-align: center;
+            margin-top: 8px;
+        }
 
-        .links a {
-            color: #0d6efd;
+        .login-form-forgotpassword a {
+            color: #0f47ad;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 15px;
         }
 
-        .cookies-notice { text-align: right; margin-top: 12px; }
-
-        .cookies-notice a {
-            color: #0d6efd;
-            text-decoration: none;
-            font-size: 13px;
+        .login-form-forgotpassword a:hover {
+            text-decoration: underline;
         }
 
-        /* SUCCESS PAGE */
-        .success-container {
-            background: white;
+        .cookies-row {
+            display: flex;
+            margin-top: 8px;
+        }
+
+        .btn-link {
+            margin-left: auto;
+            background: none;
+            border: 1px solid transparent;
             border-radius: 8px;
-            padding: 48px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: #0f47ad;
+            font-size: 15px;
+            font-family: Roboto, sans-serif;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-link i {
+            margin-right: 4px;
+        }
+
+        /* ===== SUCCESS PAGE ===== */
+        .success-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .success-card {
+            background: #fff;
+            padding: 48px 32px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 528px;
             text-align: center;
         }
 
@@ -144,23 +195,34 @@
         .success-subtitle {
             font-size: 15px;
             color: #666;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .success-name {
             font-weight: 600;
-            color: #333;
+            color: #1d2125;
         }
 
-        /* REVEAL PAGE */
-        .reveal-container {
+        /* ===== REVEAL PAGE ===== */
+        .reveal-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .reveal-card {
             background: white;
             border-radius: 12px;
             padding: 32px 28px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            max-width: 580px;
+            width: 100%;
+            max-width: 560px;
             text-align: center;
         }
+
+        .reveal-icon { font-size: 48px; margin-bottom: 8px; }
 
         .reveal-title {
             font-size: 26px;
@@ -233,33 +295,16 @@
         .info-box p { font-size: 13px; line-height: 1.5; }
         .info-box ul { font-size: 13px; line-height: 1.7; padding-left: 20px; }
 
-        .red-flags {
-            background: #f8d7da;
-            border: 2px solid #dc3545;
-        }
-
+        .red-flags { background: #f8d7da; border: 2px solid #dc3545; }
         .red-flags h3, .red-flags ul { color: #842029; }
 
-        .reassurance {
-            background: #d1e7dd;
-            border: 2px solid #198754;
-        }
-
+        .reassurance { background: #d1e7dd; border: 2px solid #198754; }
         .reassurance h3, .reassurance p { color: #0f5132; }
 
-        .action-box {
-            background: #cfe2ff;
-            border: 2px solid #0d6efd;
-            text-align: center;
-        }
+        .action-box { background: #cfe2ff; border: 2px solid #0d6efd; text-align: center; }
+        .action-box p { color: #084298; font-size: 14px; font-weight: 600; }
 
-        .action-box p {
-            color: #084298;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* LOADING SPINNER */
+        /* ===== LOADING ===== */
         .loading-overlay {
             display: none;
             position: fixed;
@@ -278,7 +323,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid #e0e0e0;
-            border-top-color: #0d6efd;
+            border-top-color: #0f47ad;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
@@ -296,90 +341,91 @@
 </head>
 <body>
 
-    <!-- PHASE 1: FAKE LOGIN -->
+    <!-- PHASE 1: FAKE LOGIN (exact Moodle Moove theme replica) -->
     <div class="page active" id="loginPage">
-        <div class="login-container">
-            <div class="logo-section">
-                <img src="https://www.apiu.edu/wp-content/uploads/2024/11/apiu-seal.webp" alt="APIU Seal" class="apiu-seal"
-                     onerror="this.style.display='none'">
-                <div class="apiu-text">Asia-Pacific<br>International<br>University</div>
-                <div class="logo-divider"></div>
-                <svg class="moodle-logo" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
-                    <text x="10" y="38" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#f89d1c">m</text>
-                    <text x="38" y="38" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#f89d1c">oodle</text>
-                    <rect x="155" y="2" width="16" height="3" fill="#333" rx="1"/>
-                    <polygon points="150,5 172,5 161,18" fill="#333"/>
-                    <rect x="150" y="15" width="22" height="3" fill="#333" rx="1"/>
-                </svg>
-            </div>
-
-            <form id="loginForm" onsubmit="return handleLogin(event)">
-                <div class="form-group">
-                    <input type="text" id="username" placeholder="Username" autocomplete="off" required>
+        <div class="login-wrapper">
+            <div class="loginform">
+                <div class="login-logo">
+                    <img id="logoimage" src="https://lms.apiu.edu/pluginfile.php/1/theme_moove/logo/1771231883/moodle%20logo.png" class="img-fluid" alt="Learning Management System">
+                    <h1 class="login-heading">Log in to Learning Management System</h1>
                 </div>
-                <div class="form-group">
-                    <input type="password" id="password" placeholder="Password" autocomplete="off" required>
-                </div>
-                <button type="submit" class="login-btn">Log in</button>
-            </form>
 
-            <div class="links">
-                <a href="#" onclick="return false;">Lost password?</a>
-            </div>
-            <div class="cookies-notice">
-                <a href="#" onclick="return false;">&#9432; Cookies notice</a>
+                <form id="loginForm" onsubmit="return handleLogin(event)">
+                    <div class="form-group">
+                        <label for="username" class="login-heading">Username</label>
+                        <input type="text" name="username" id="username" class="form-control-lg" placeholder="Username" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="login-heading">Password</label>
+                        <input type="password" name="password" id="password" class="form-control-lg" placeholder="Password" autocomplete="current-password">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn-primary" type="submit" id="loginbtn">Log in</button>
+                    </div>
+                    <div class="login-form-forgotpassword">
+                        <a href="#" onclick="return false;">Lost password?</a>
+                    </div>
+                </form>
+
+                <div class="cookies-row">
+                    <button type="button" class="btn-link" onclick="return false;"><i class="fa fa-question-circle"></i> Cookies notice</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PHASE 2: FAKE SUCCESS (after login) -->
+    <!-- PHASE 2: FAKE SUCCESS -->
     <div class="page" id="successPage">
-        <div class="success-container">
-            <div class="success-check">&#10003;</div>
-            <div class="success-title">Attendance Recorded</div>
-            <div class="success-subtitle">
-                Welcome, <span class="success-name" id="successName"></span><br>
-                Your attendance has been confirmed.<br>
-                You may close this page.
+        <div class="success-wrapper">
+            <div class="success-card">
+                <div class="success-check">&#10003;</div>
+                <div class="success-title">Attendance Recorded</div>
+                <div class="success-subtitle">
+                    Welcome, <span class="success-name" id="successName"></span><br>
+                    Your attendance has been confirmed.<br>
+                    You may close this page.
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PHASE 3: REVEAL (when student returns) -->
-    <div class="page" id="revealPage" style="max-width: 580px;">
-        <div class="reveal-container">
-            <div style="font-size: 48px; margin-bottom: 8px;">&#9888;&#65039;</div>
-            <div class="reveal-title">You've Been Phished!</div>
-            <div class="reveal-subtitle">This was a <strong>GENL114 classroom demonstration</strong></div>
+    <!-- PHASE 3: REVEAL (on return visit) -->
+    <div class="page" id="revealPage">
+        <div class="reveal-wrapper">
+            <div class="reveal-card">
+                <div class="reveal-icon">&#9888;&#65039;</div>
+                <div class="reveal-title">You've Been Phished!</div>
+                <div class="reveal-subtitle">This was a <strong>GENL114 classroom demonstration</strong></div>
 
-            <div class="captured-data">
-                <h3>&#128274; A criminal would now have:</h3>
-                <div class="captured-item">
-                    <span class="captured-label">Username:</span>
-                    <span class="captured-value" id="revealUsername"></span>
+                <div class="captured-data">
+                    <h3>&#128274; A criminal would now have:</h3>
+                    <div class="captured-item">
+                        <span class="captured-label">Username:</span>
+                        <span class="captured-value" id="revealUsername"></span>
+                    </div>
+                    <div class="captured-item">
+                        <span class="captured-label">Password:</span>
+                        <span class="captured-value" id="revealPassword"></span>
+                    </div>
                 </div>
-                <div class="captured-item">
-                    <span class="captured-label">Password:</span>
-                    <span class="captured-value" id="revealPassword"></span>
+
+                <div class="info-box red-flags">
+                    <h3>&#128680; Red flags you should have noticed:</h3>
+                    <ul>
+                        <li>The URL is <strong>giovanni-agra.github.io</strong> — NOT lms.apiu.edu</li>
+                        <li>The QR code came from an unexpected source</li>
+                        <li>Real Moodle keeps you logged in — why log in again?</li>
+                    </ul>
                 </div>
-            </div>
 
-            <div class="info-box red-flags">
-                <h3>&#128680; Red flags you should have noticed:</h3>
-                <ul>
-                    <li>The URL is <strong>giovanni-agra.github.io</strong> — NOT lms.apiu.edu</li>
-                    <li>The QR code came from an unexpected source</li>
-                    <li>Real Moodle keeps you logged in — why log in again?</li>
-                </ul>
-            </div>
+                <div class="info-box reassurance">
+                    <h3>&#9989; You are safe</h3>
+                    <p>This page runs entirely in your browser. Your credentials were <strong>NOT sent anywhere</strong> and <strong>NOT stored on any server</strong>.</p>
+                </div>
 
-            <div class="info-box reassurance">
-                <h3>&#9989; You are safe</h3>
-                <p>This page runs entirely in your browser. Your credentials were <strong>NOT sent anywhere</strong> and <strong>NOT stored on any server</strong>.</p>
-            </div>
-
-            <div class="info-box action-box">
-                <p>&#128272; If you used your REAL password, change it now at lms.apiu.edu</p>
+                <div class="info-box action-box">
+                    <p>&#128272; If you used your REAL password, change it now at lms.apiu.edu</p>
+                </div>
             </div>
         </div>
     </div>
@@ -395,13 +441,13 @@
             var stored = localStorage.getItem('phished');
 
             if (stored) {
-                // PHASE 3: Returning visitor — show the reveal
+                // Returning visitor — show the reveal
                 var data = JSON.parse(stored);
                 document.getElementById('revealUsername').textContent = data.u;
                 document.getElementById('revealPassword').textContent = data.p;
                 showPage('revealPage');
             }
-            // Otherwise: PHASE 1 (login form) is already showing
+            // Otherwise: login form is already showing
         })();
 
         function showPage(id) {
@@ -418,7 +464,9 @@
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
 
-            // Store credentials in localStorage for the reveal later
+            if (!username || !password) return false;
+
+            // Store in localStorage for the reveal later
             localStorage.setItem('phished', JSON.stringify({ u: username, p: password }));
 
             // Show loading spinner
@@ -426,8 +474,6 @@
 
             setTimeout(function() {
                 document.getElementById('loadingOverlay').classList.remove('active');
-
-                // Show success page with their name
                 document.getElementById('successName').textContent = username;
                 showPage('successPage');
             }, 2000);
