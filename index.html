@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to the site</title>
+    <link rel="icon" href="https://lms.apiu.edu/theme/image.php/boost/theme/1735542498/favicon" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #e8eaed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
+            background: white;
+            border-radius: 8px;
+            padding: 40px 48px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .apiu-seal {
+            width: 60px;
+            height: 60px;
+        }
+
+        .apiu-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a3a5c;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 50px;
+            background-color: #ccc;
+            margin: 0 8px;
+        }
+
+        .moodle-logo {
+            height: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #f89d1c;
+            box-shadow: 0 0 0 2px rgba(248, 157, 28, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: #6c757d;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .login-btn:hover {
+            background-color: #0b5ed7;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .links a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .cookies-notice {
+            text-align: right;
+            margin-top: 12px;
+        }
+
+        .cookies-notice a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* REVEAL PAGE */
+        .reveal-container {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 40px 36px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 580px;
+            text-align: center;
+        }
+
+        .reveal-container.active {
+            display: block;
+        }
+
+        .login-container.hidden {
+            display: none;
+        }
+
+        .warning-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+        }
+
+        .reveal-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #dc3545;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reveal-subtitle {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 28px;
+        }
+
+        .captured-data {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .captured-data h3 {
+            color: #856404;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .captured-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ffe69c;
+        }
+
+        .captured-item:last-child {
+            border-bottom: none;
+        }
+
+        .captured-label {
+            font-weight: 600;
+            color: #664d03;
+            font-size: 14px;
+        }
+
+        .captured-value {
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 15px;
+            word-break: break-all;
+            max-width: 280px;
+            text-align: right;
+        }
+
+        .reassurance {
+            background: #d1e7dd;
+            border: 2px solid #198754;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .reassurance h3 {
+            color: #0f5132;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .reassurance p {
+            color: #0f5132;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .red-flags {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .red-flags h3 {
+            color: #842029;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .red-flags ul {
+            color: #842029;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        .action-box {
+            background: #cfe2ff;
+            border: 2px solid #0d6efd;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0 0;
+            text-align: center;
+        }
+
+        .action-box p {
+            color: #084298;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* LOADING SPINNER */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #0d6efd;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            margin-top: 16px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FAKE LOGIN PAGE -->
+    <div class="login-container" id="loginPage">
+        <div class="logo-section">
+            <img src="https://www.apiu.edu/wp-content/uploads/2024/11/apiu-seal.webp" alt="APIU Seal" class="apiu-seal"
+                 onerror="this.style.display='none'">
+            <div class="apiu-text">Asia-Pacific<br>International<br>University</div>
+            <div class="logo-divider"></div>
+            <svg class="moodle-logo" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                <text x="10" y="38" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#f89d1c">m</text>
+                <text x="38" y="38" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#f89d1c">oodle</text>
+                <rect x="155" y="2" width="16" height="3" fill="#333" rx="1"/>
+                <polygon points="150,5 172,5 161,18" fill="#333"/>
+                <rect x="150" y="15" width="22" height="3" fill="#333" rx="1"/>
+            </svg>
+        </div>
+
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Username" autocomplete="off" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" autocomplete="off" required>
+            </div>
+            <button type="submit" class="login-btn">Log in</button>
+        </form>
+
+        <div class="links">
+            <a href="#" onclick="return false;">Lost password?</a>
+        </div>
+        <div class="cookies-notice">
+            <a href="#" onclick="return false;">&#9432; Cookies notice</a>
+        </div>
+    </div>
+
+    <!-- LOADING SPINNER -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Logging in...</div>
+    </div>
+
+    <!-- REVEAL PAGE -->
+    <div class="reveal-container" id="revealPage">
+        <div class="warning-icon">&#9888;&#65039;</div>
+        <div class="reveal-title">You've Been Phished!</div>
+        <div class="reveal-subtitle">This is a <strong>GENL114 classroom demonstration</strong></div>
+
+        <div class="captured-data">
+            <h3>&#128274; A criminal would now have:</h3>
+            <div class="captured-item">
+                <span class="captured-label">Your Username:</span>
+                <span class="captured-value" id="revealUsername"></span>
+            </div>
+            <div class="captured-item">
+                <span class="captured-label">Your Password:</span>
+                <span class="captured-value" id="revealPassword"></span>
+            </div>
+        </div>
+
+        <div class="red-flags">
+            <h3>&#128680; Red flags you should have noticed:</h3>
+            <ul>
+                <li>The URL is <strong>giovanni-agra.github.io</strong> — NOT lms.apiu.edu</li>
+                <li>The QR code came from an unexpected source</li>
+                <li>You were not expecting a Moodle login at that moment</li>
+                <li>Real Moodle keeps you logged in — why would it ask again?</li>
+            </ul>
+        </div>
+
+        <div class="reassurance">
+            <h3>&#9989; Don't worry — you are safe</h3>
+            <p>This page runs entirely in your browser. Your username and password were <strong>NOT sent anywhere</strong> and were <strong>NOT stored</strong>. No one has your credentials.</p>
+        </div>
+
+        <div class="action-box">
+            <p>&#128272; If you used your REAL password, change it NOW at lms.apiu.edu<br>
+            This is why unique passwords matter!</p>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Show loading spinner for realism
+            document.getElementById('loadingOverlay').classList.add('active');
+
+            setTimeout(function() {
+                // Hide loading
+                document.getElementById('loadingOverlay').classList.remove('active');
+
+                // Show captured credentials
+                document.getElementById('revealUsername').textContent = username;
+                document.getElementById('revealPassword').textContent = password;
+
+                // Switch to reveal page
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('revealPage').classList.add('active');
+            }, 2000);
+
+            return false;
+        }
+    </script>
+</body>
+</html>
